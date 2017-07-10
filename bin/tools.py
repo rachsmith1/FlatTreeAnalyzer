@@ -4,6 +4,7 @@ import ROOT, collections, os
 from ROOT import TFile, TTree, gROOT, TH1D, TH2D, kRed, TLegend, THStack, TVector2,  TGraph, TMultiGraph
 from math import sqrt
 import warnings
+import os
 warnings.filterwarnings(action="ignore", category=RuntimeWarning, message="creating converter.*")
 warnings.filterwarnings(action="ignore", category=RuntimeWarning, message="Deleting canvas.*")
 warnings.filterwarnings(action="ignore", category=RuntimeWarning, message="Replacing existing*")
@@ -59,6 +60,7 @@ class Process:
                 self.sv[s][v] = TH1D(hname,hname+";"+dv[v]["title"]+";",dv[v]["bin"],dv[v]["xmin"],dv[v]["xmax"])
                 self.sv[s][v].Sumw2()
 
+
         rf = TFile(self.rt)
         t = rf.Get("events")
         for s in selections:
@@ -70,13 +72,14 @@ class Process:
             numberOfEntries = rt.GetEntries()
             #numberOfEntries = 100
             print 'number of events:', numberOfEntries
+	    print ('Weight = ' +  str(self.k) + " * " + str(self.x) + " * " + str(self.e) + " / " + str(self.n) + " = " + str(self.w))
             for entry in xrange(numberOfEntries) :
-                if (entry+1)%500 == 0: print '    ...', (entry+1), 'events processed ...'
+                if (entry+1)%50000 == 0: print '    ...', (entry+1), 'events processed ...'
                 rt.GetEntry(entry)
                 weight = self.w * getattr(rt,"weight")
                 for v in dv.keys():
                     self.sv[s][v].Fill(getattr(rt,dv[v]["name"]), weight)
-            os.system('rm tmp.root')
+	    os.system('rm tmp.root')
 
     def getYields(self):
         yld = dict()
@@ -106,7 +109,7 @@ def selectionDict(selections):
     return seldict
 
 #_____________________________________________________________________________________________________
-def producePlots(selections, groups, colors, variables, unc, name, lumi, version, run_full):
+def producePlots(selections, groups, colors, variables, unc, name, lumi, version, run_full, saveDir):
     
     name = name.replace("{", "")
     name = name.replace("}", "")
@@ -130,8 +133,11 @@ def producePlots(selections, groups, colors, variables, unc, name, lumi, version
     seldict = selectionDict(selections)
     selections = seldict.values()
 
-    pdir = "./plots_{}/".format(name)
-    rdir = "./root_{}/".format(name)
+    pdir = os.path.join(saveDir, "plots_{}".format(name))
+    rdir = os.path.join(saveDir, "root_{}".format(name))
+
+    #pdir = "./plots_{}/".format(name)
+    #rdir = "./root_{}/".format(name)
 
     # if analysis has not been ran before
     if run_full:
@@ -157,12 +163,15 @@ def producePlots(selections, groups, colors, variables, unc, name, lumi, version
     processes = groups.keys()
     hfile = ROOT.TFile("{}/histos.root".format(rdir))
     
+
     printYieldsFromHistos(processes, selections, variables, unc, lumi, hfile)
 
     produceStackedPlots(processes, selections, variables, colors, lumi, pdir, version, False, False, hfile)
     produceStackedPlots(processes, selections, variables, colors, lumi, pdir, version, True, False, hfile)
     produceStackedPlots(processes, selections, variables, colors, lumi, pdir, version, False, True, hfile)
     produceStackedPlots(processes, selections, variables, colors, lumi, pdir, version, True, True, hfile)
+
+    #produceYieldPlots(processes, seldict, variables, unc, lumi, pdir, version, hfile)
 
     print '======================================================================================'
     print '======================================================================================'
@@ -259,6 +268,8 @@ def printYields(listOfSignals, listOfBackgrounds, selections, uncertainties, int
         print ''    
         print ''    
 
+        print ("s = " + str(s) + ", b = " + str(b) + ", s/b = " + str(s/b))
+
         # calculate significance and delta_mu/mu (uncertainty on the signal strength)
         print '{:>24} {:>20} {:>20}'.format('(sig_s, sig_b) (%)', 'significance', 'dmu/mu (%)')
         print '    ------------------------------------------------------------'
@@ -313,6 +324,7 @@ def printYieldsFromHistos(processes, selections, variables, uncertainties, intLu
         print '{:>20} {:>20} {:>20}'.format('background', round(b,3), round(sqrt(eb),3))
 
         print ''    
+        print ("s = " + str(s) + ", b = " + str(b) + ", s/b = " + str(s/b))
         print ''    
 
         # calculate significance and delta_mu/mu (uncertainty on the signal strength)

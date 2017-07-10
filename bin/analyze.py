@@ -43,7 +43,7 @@ def main():
     param = importlib.import_module(os.path.splitext(ntpath.basename(paramFile))[0])
 
     # tree location
-    treePath = '/heppy.analyzers.examples.{}.TreeProducer.TreeProducer_1/tree.root'.format(analysisName)
+    treePath = 'heppy.{}.TreeProducer.TreeProducer_1/tree.root'.format(analysisName)
 
     # retrieve list of processes from heppy cfg
     processes = []
@@ -75,7 +75,8 @@ def main():
                      sh, 
                      param.intLumi, 
                      param.delphesVersion, 
-                     param.runFull)
+                     param.runFull,
+		     analysisDir)
 
 #______________________________________________________________________________
 def formBlock(processes, procdict, sb, bb, shyp, treedir, treepath, block):
@@ -91,7 +92,7 @@ def fillBlock(procs, processes, procdict, treedir, treepath):
      for procstr in procs:
          for pname in processes:
              if procstr in pname:
-                 print pname
+                 print (pname)
                  xsec = procdict[pname]['crossSection']
                  nev = procdict[pname]['numberOfEvents']
                  eff = procdict[pname]['matchingEfficiency']
