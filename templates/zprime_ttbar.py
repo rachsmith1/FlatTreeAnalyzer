@@ -103,10 +103,6 @@ selbase = 'Jet1_pt > 2800. && Jet2_pt > 2800. && abs(Jet1_eta) < 3. && abs(Jet2_
 # add mass-dependent list of event #selections here if needed...
 
 selections = collections.OrderedDict()
-#selections['m_{Z} = 2 TeV'] = []
-#selections['m_{Z} = 2 TeV'].append(selbase)
-#selections['m_{Z} = 5 TeV'] = []
-#selections['m_{Z} = 5 TeV'].append(selbase)
 selections['m_{Z} = 10 TeV'] = []
 selections['m_{Z} = 10 TeV'].append(selbase)
 selections['m_{Z} = 15 TeV'] = []
