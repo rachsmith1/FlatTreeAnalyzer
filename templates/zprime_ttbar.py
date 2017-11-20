@@ -66,7 +66,6 @@ signal_groups['m_{Z} = 40 TeV'] = ['pp_Zprime_40TeV_ttbar']
 
 background_groups = collections.OrderedDict()
 
-
 background_groups['vv']  = [
 				'pp_vv_M_5000_10000',
                                 'pp_vv_M_10000_15000',
@@ -84,7 +83,6 @@ background_groups['QCD'] = [
                                 'pp_jj_M_10000_15000',
                                 'pp_jj_M_15000_100000',
                            ]
-
 
 # global parameters
 intLumi = 1.0e+07
