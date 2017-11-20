@@ -3,13 +3,44 @@ import collections
 
 ### variable list
 variables = {
-    "tau32_1":{"name":"tau32_1","title":"#tau_{3,2}","bin":50,"xmin":0.0,"xmax":1.0},
-    "softDroppedJet1_m":{"name":"softDroppedJet1_m","title":"Soft Dropped Mass","bin":50,"xmin":0.0,"xmax":1000.0},
-    "zPrimeReconstructedMass":{"name":"zPrimeReconstructedMass","title":"Z' Reconstructed Mass (Ungroomed)","bin":50,"xmin":0.0,"xmax":50000.0},
-    "zPrimeReconstructedMass_softDropped":{"name":"zPrimeReconstructedMass_softDropped","title":"Z' Reconstructed Mass (Soft Dropped)","bin":50,"xmin":0.0,"xmax":50000.0},
+	'Jet1_tau21':{'name':'Jet1_tau21','title':'#tau_{2,1}','bin':50,'xmin':0.0,'xmax':1.0},
+        'Jet1_tau32':{'name':'Jet1_tau32','title':'#tau_{3,2}','bin':50,'xmin':0.0,'xmax':1.0},
+        'Jet1_tau31':{'name':'Jet1_tau31','title':'#tau_{3,1}','bin':50,'xmin':0.0,'xmax':1.0},
+
+        'Jet1_pt':{'name':'Jet1_pt','title':'Leading jet (ungroomed) p_{T}','bin':50,'xmin':0.0,'xmax':20000},
+        'Jet1_eta':{'name':'Jet1_eta','title':'Leading jet (ungroomed) eta','bin':50,'xmin':-2.5,'xmax':2.5},
+        'Jet1_m':{'name':'Jet1_m','title':'Leading jet (ungroomed) mass','bin':50,'xmin':0.0,'xmax':1000},
+
+        'softDroppedJet1_pt':{'name':'softDroppedJet1_pt','title':'Leading jet (soft dropped) p_{T}','bin':50,'xmin':0.0,'xmax':20000},
+        'softDroppedJet1_eta':{'name':'softDroppedJet1_eta','title':'Leading jet (soft dropped) eta','bin':50,'xmin':-2.5,'xmax':2.5},
+        'softDroppedJet1_m':{'name':'softDroppedJet1_m','title':'Leading jet (soft dropped) mass','bin':50,'xmin':0.0,'xmax':1000},
+
+	'Jet2_tau21':{'name':'Jet2_tau21','title':'#tau_{2,1}','bin':50,'xmin':0.0,'xmax':1.0},
+        'Jet2_tau32':{'name':'Jet2_tau32','title':'#tau_{3,2}','bin':50,'xmin':0.0,'xmax':1.0},
+        'Jet2_tau31':{'name':'Jet2_tau31','title':'#tau_{3,1}','bin':50,'xmin':0.0,'xmax':1.0},
+
+        'Jet2_pt':{'name':'Jet2_pt','title':'Leading jet (ungroomed) p_{T}','bin':50,'xmin':0.0,'xmax':20000},
+        'Jet2_eta':{'name':'Jet2_eta','title':'Leading jet (ungroomed) eta','bin':50,'xmin':-2.5,'xmax':2.5},
+        'Jet2_m':{'name':'Jet2_m','title':'Leading jet (ungroomed) mass','bin':50,'xmin':0.0,'xmax':1000},
+
+        'softDroppedJet2_pt':{'name':'softDroppedJet2_pt','title':'Leading jet (soft dropped) p_{T}','bin':50,'xmin':0.0,'xmax':20000},
+        'softDroppedJet2_eta':{'name':'softDroppedJet2_eta','title':'Leading jet (soft dropped) eta','bin':50,'xmin':-2.5,'xmax':2.5},
+        'softDroppedJet2_m':{'name':'softDroppedJet2_m','title':'Leading jet (soft dropped) mass','bin':50,'xmin':0.0,'xmax':1000},
+
+        'zPrimeReconstructedMass':{'name':'zPrimeReconstructedMass','title':'Zprime Reconstructed Mass (Ungroomed)','bin':180,'xmin':7000.0,'xmax':25000.0},
+
+        'rapiditySeparation':{'name':'rapiditySeparation','title':'Rapidity Separation','bin':50,'xmin':0.0,'xmax':10.0},
+        'transverseMomentumAsymmetry':{'name':'transverseMomentumAsymmetry','title':'Transverse Momentum Asymmetry','bin':50,'xmin':0.0,'xmax':1.0},
+
+	'topJetMassDifference':{'name':'topJetMassDifference','title':'Top Jet Mass Difference','bin':50,'xmin':0.0,'xmax':1000},
+	'Jet3_pt':{'name':'Jet3_pt','title':'Third Jet p_{T}','bin':50,'xmin':0.0,'xmax':1000},
+
+	'BDTvariable_qcd':{'name':'BDTvariable_qcd','title':'BDT Variable QCD','bin':50,'xmin':-0.5,'xmax':0.5},
+#	'BDTvariable_ttbar':{'name':'BDTvariable_ttbar','title':'BDT Variable ttbar','bin':50,'xmin':-0.5,'xmax':0.5},
 }
 
 colors = {}
+colors['m_{Z} = 2 TeV'] = ROOT.kBlue
 colors['m_{Z} = 5 TeV'] = ROOT.kBlue
 colors['m_{Z} = 10 TeV'] = ROOT.kBlue
 colors['m_{Z} = 15 TeV'] = ROOT.kBlue
@@ -20,8 +51,10 @@ colors['m_{Z} = 35 TeV'] = ROOT.kBlue
 colors['m_{Z} = 40 TeV'] = ROOT.kBlue
 colors['QCD'] = ROOT.kYellow
 colors['tt'] = ROOT.kRed
+colors['vv'] = ROOT.kOrange
 
 signal_groups = collections.OrderedDict()
+signal_groups['m_{Z} = 2 TeV'] = ['pp_Zprime_2TeV_ttbar']
 signal_groups['m_{Z} = 5 TeV'] = ['pp_Zprime_5TeV_ttbar']
 signal_groups['m_{Z} = 10 TeV'] = ['pp_Zprime_10TeV_ttbar']
 signal_groups['m_{Z} = 15 TeV'] = ['pp_Zprime_15TeV_ttbar']
@@ -32,33 +65,29 @@ signal_groups['m_{Z} = 35 TeV'] = ['pp_Zprime_35TeV_ttbar']
 signal_groups['m_{Z} = 40 TeV'] = ['pp_Zprime_40TeV_ttbar']
 
 background_groups = collections.OrderedDict()
-background_groups['tt']  = [	
-				'pp_tt012j_5f_HT_0_600',
-				'pp_tt012j_5f_HT_600_1200',
-				'pp_tt012j_5f_HT_1200_2100',
-				'pp_tt012j_5f_HT_2100_3400',
-				'pp_tt012j_5f_HT_3400_5300',
-				'pp_tt012j_5f_HT_5300_8100',
-				'pp_tt012j_5f_HT_8100_15000',
-				'pp_tt012j_5f_HT_15000_25000',
-				'pp_tt012j_5f_HT_25000_35000',
-				'pp_tt012j_5f_HT_35000_100000',
+
+
+background_groups['vv']  = [
+				'pp_vv_M_5000_10000',
+                                'pp_vv_M_10000_15000',
+                                'pp_vv_M_15000_100000',
+		           ] 
+
+background_groups['tt']  = [
+				'pp_tt_M_5000_10000',
+				'pp_tt_M_10000_15000',
+				'pp_tt_M_15000_100000',
 			   ]
 
 background_groups['QCD'] = [
-                                'pp_jj012j_5f_HT_0_500',
-                                'pp_jj012j_5f_HT_500_1000',
-                                'pp_jj012j_5f_HT_1000_2000',
-                                'pp_jj012j_5f_HT_2000_4000',
-                                'pp_jj012j_5f_HT_4000_7200',
-                                'pp_jj012j_5f_HT_7200_15000',
-                                'pp_jj012j_5f_HT_15000_25000',
-                                'pp_jj012j_5f_HT_25000_35000',
-                                'pp_jj012j_5f_HT_35000_100000',
+                                'pp_jj_M_5000_10000',
+                                'pp_jj_M_10000_15000',
+                                'pp_jj_M_15000_100000',
                            ]
 
+
 # global parameters
-intLumi = 3.0e+07
+intLumi = 1.0e+07
 delphesVersion = '3.4.2'
 
 uncertainties = []
@@ -71,35 +100,24 @@ uncertainties.append([0.02, 0.10])
 runFull = True
 
 # base pre-#selections
-selbase = 'Jet1_pt > 500. && Jet2_pt > 300. && abs(Jet1_eta) < 2.4 && abs(Jet2_eta) < 2.4'
+selbase = 'Jet1_pt > 2800. && Jet2_pt > 2800. && abs(Jet1_eta) < 3. && abs(Jet2_eta) < 3. && BDTvariable_qcd > 0.2'
 
 # add mass-dependent list of event #selections here if needed...
 
 selections = collections.OrderedDict()
-selections['m_{Z} = 5 TeV'] = []
-selections['m_{Z} = 5 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 5*1000/Jet1_pt > 1.5 && 5*1000/Jet1_pt < 7.5 && 5*1000/Jet2_pt > 1.5 && 5*1000/Jet2_pt < 10')
-
+#selections['m_{Z} = 2 TeV'] = []
+#selections['m_{Z} = 2 TeV'].append(selbase)
+#selections['m_{Z} = 5 TeV'] = []
+#selections['m_{Z} = 5 TeV'].append(selbase)
 selections['m_{Z} = 10 TeV'] = []
-selections['m_{Z} = 10 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 10*1000/Jet1_pt > 1.5 && 10*1000/Jet1_pt < 7.5 && 10*1000/Jet2_pt > 1.5 && 10*1000/Jet2_pt < 10')
-
+selections['m_{Z} = 10 TeV'].append(selbase)
 selections['m_{Z} = 15 TeV'] = []
-selections['m_{Z} = 15 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 15*1000/Jet1_pt > 1.5 && 15*1000/Jet1_pt < 7.5 && 15*1000/Jet2_pt > 1.5 && 15*1000/Jet2_pt < 10')
-
+selections['m_{Z} = 15 TeV'].append(selbase)
 selections['m_{Z} = 20 TeV'] = []
-selections['m_{Z} = 20 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 20*1000/Jet1_pt > 1.5 && 20*1000/Jet1_pt < 7.5 && 20*1000/Jet2_pt > 1.5 && 20*1000/Jet2_pt < 10')
-
+selections['m_{Z} = 20 TeV'].append(selbase)
 selections['m_{Z} = 25 TeV'] = []
-selections['m_{Z} = 25 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 25*1000/Jet1_pt > 1.5 && 25*1000/Jet1_pt < 7.5 && 25*1000/Jet2_pt > 1.5 && 25*1000/Jet2_pt < 10')
-
+selections['m_{Z} = 25 TeV'].append(selbase)
 selections['m_{Z} = 30 TeV'] = []
-selections['m_{Z} = 30 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 30*1000/Jet1_pt > 1.5 && 30*1000/Jet1_pt < 7.5 && 30*1000/Jet2_pt > 1.5 && 30*1000/Jet2_pt < 10')
-
-selections['m_{Z} = 35 TeV'] = []
-selections['m_{Z} = 35 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 35*1000/Jet1_pt > 1.5 && 35*1000/Jet1_pt < 7.5 && 35*1000/Jet2_pt > 1.5 && 35*1000/Jet2_pt < 10')
-
-selections['m_{Z} = 40 TeV'] = []
-selections['m_{Z} = 40 TeV'].append(selbase + ' && tau32_1 < 0.74 && tau32_2 < 0.74 && softDroppedJet1_m < 210. && softDroppedJet1_m > 110. && softDroppedJet2_m < 210. && softDroppedJet2_m > 110. && 40*1000/Jet1_pt > 1.5 && 40*1000/Jet1_pt < 7.5 && 40*1000/Jet2_pt > 1.5 && 40*1000/Jet2_pt < 10')
-
-
+selections['m_{Z} = 30 TeV'].append(selbase)
 
 
